@@ -65,7 +65,7 @@
                         Puntos: <span id="score-display">0</span>
                     </div>
                     <div class="text-gray-500 font-medium italic">
-                        Nivel: <span id="level-display">1</span> / 10
+                        Nivel: <span id="level-display">1</span> / <span id="total-levels-display">10</span>
                     </div>
                 </div>
 
@@ -151,10 +151,10 @@
     </div>
 
     <script>
-        // --- Database of Words ---
+        // --- Database of Words (Expanded to 60 words) ---
         const wordBank = [
             { word: "Pequeño", type: "sinonimo", options: ["Chico", "Grande", "Rápido"], answer: "Chico" },
-            { word: "Rápido", type: "antónimo", options: ["Lento", "Veloz", "Saltarin"], answer: "Lento" },
+            { word: "Rápido", type: "antónimo", options: ["Lento", "Veloz", "Saltarín"], answer: "Lento" },
             { word: "Feliz", type: "sinonimo", options: ["Contento", "Triste", "Enojado"], answer: "Contento" },
             { word: "Alto", type: "antónimo", options: ["Bajo", "Grande", "Largo"], answer: "Bajo" },
             { word: "Bonito", type: "sinonimo", options: ["Hermoso", "Feo", "Sucio"], answer: "Hermoso" },
@@ -162,7 +162,58 @@
             { word: "Gritar", type: "sinonimo", options: ["Vocear", "Callar", "Susurrar"], answer: "Vocear" },
             { word: "Caliente", type: "antónimo", options: ["Frío", "Tibio", "Fuego"], answer: "Frío" },
             { word: "Comenzar", type: "sinonimo", options: ["Empezar", "Acabar", "Pausar"], answer: "Empezar" },
-            { word: "Luz", type: "antónimo", options: ["Oscuridad", "Brillo", "Sol"], answer: "Oscuridad" }
+            { word: "Luz", type: "antónimo", options: ["Oscuridad", "Brillo", "Sol"], answer: "Oscuridad" },
+            // +50 nuevas palabras
+            { word: "Flaco", type: "sinonimo", options: ["Delgado", "Gordo", "Fuerte"], answer: "Delgado" },
+            { word: "Subir", type: "antónimo", options: ["Bajar", "Escalar", "Saltar"], answer: "Bajar" },
+            { word: "Saltar", type: "sinonimo", options: ["Brincar", "Correr", "Dormir"], answer: "Brincar" },
+            { word: "Limpio", type: "antónimo", options: ["Sucio", "Aseado", "Claro"], answer: "Sucio" },
+            { word: "Caminar", type: "sinonimo", options: ["Andar", "Volar", "Nadar"], answer: "Andar" },
+            { word: "Encendido", type: "antónimo", options: ["Apagado", "Brillante", "Rojo"], answer: "Apagado" },
+            { word: "Fácil", type: "antónimo", options: ["Difícil", "Sencillo", "Rápido"], answer: "Difícil" },
+            { word: "Hablar", type: "sinonimo", options: ["Conversar", "Mirar", "Comer"], answer: "Conversar" },
+            { word: "Día", type: "antónimo", options: ["Noche", "Tarde", "Mañana"], answer: "Noche" },
+            { word: "Triste", type: "sinonimo", options: ["Apenado", "Alegre", "Divertido"], answer: "Apenado" },
+            { word: "Mucho", type: "antónimo", options: ["Poco", "Bastante", "Todo"], answer: "Poco" },
+            { word: "Terminar", type: "sinonimo", options: ["Finalizar", "Iniciar", "Seguir"], answer: "Finalizar" },
+            { word: "Adentro", type: "antónimo", options: ["Afuera", "Interior", "Encima"], answer: "Afuera" },
+            { word: "Gordo", type: "sinonimo", options: ["Obeso", "Flaco", "Bajo"], answer: "Obeso" },
+            { word: "Lleno", type: "antónimo", options: ["Vacío", "Cargado", "Mucho"], answer: "Vacío" },
+            { word: "Escuchar", type: "sinonimo", options: ["Oír", "Hablar", "Cantar"], answer: "Oír" },
+            { word: "Mojado", type: "antónimo", options: ["Seco", "Empapado", "Agua"], answer: "Seco" },
+            { word: "Grande", type: "sinonimo", options: ["Enorme", "Chico", "Lejos"], answer: "Enorme" },
+            { word: "Izquierda", type: "antónimo", options: ["Derecha", "Arriba", "Frente"], answer: "Derecha" },
+            { word: "Rico", type: "sinonimo", options: ["Sabroso", "Feo", "Malo"], answer: "Sabroso" },
+            { word: "Sano", type: "antónimo", options: ["Enfermo", "Fuerte", "Curado"], answer: "Enfermo" },
+            { word: "Escoger", type: "sinonimo", options: ["Elegir", "Perder", "Buscar"], answer: "Elegir" },
+            { word: "Guerra", type: "antónimo", options: ["Paz", "Pelea", "Ruido"], answer: "Paz" },
+            { word: "Rápido", type: "sinonimo", options: ["Veloz", "Lento", "Quieto"], answer: "Veloz" },
+            { word: "Pesado", type: "antónimo", options: ["Ligero", "Duro", "Fuerte"], answer: "Ligero" },
+            { word: "Oler", type: "sinonimo", options: ["Olfatear", "Mirar", "Tocar"], answer: "Olfatear" },
+            { word: "Duro", type: "antónimo", options: ["Blando", "Fuerte", "Rígido"], answer: "Blando" },
+            { word: "Obsequio", type: "sinonimo", options: ["Regalo", "Compra", "Venta"], answer: "Regalo" },
+            { word: "Caro", type: "antónimo", options: ["Barato", "Costoso", "Lindo"], answer: "Barato" },
+            { word: "Sencillo", type: "sinonimo", options: ["Fácil", "Raro", "Difícil"], answer: "Fácil" },
+            { word: "Primero", type: "antónimo", options: ["Último", "Segundo", "Medio"], answer: "Último" },
+            { word: "Médico", type: "sinonimo", options: ["Doctor", "Alumno", "Maestro"], answer: "Doctor" },
+            { word: "Amor", type: "antónimo", options: ["Odio", "Cariño", "Beso"], answer: "Odio" },
+            { word: "Camino", type: "sinonimo", options: ["Sendero", "Bosque", "Casa"], answer: "Sendero" },
+            { word: "Fuerte", type: "antónimo", options: ["Débil", "Robusto", "Grande"], answer: "Débil" },
+            { word: "Ocultar", type: "sinonimo", options: ["Esconder", "Mostrar", "Perder"], answer: "Esconder" },
+            { word: "Silencio", type: "antónimo", options: ["Ruido", "Paz", "Calma"], answer: "Ruido" },
+            { word: "Bello", type: "sinonimo", options: ["Guapo", "Feo", "Triste"], answer: "Guapo" },
+            { word: "Cerca", type: "antónimo", options: ["Lejos", "Próximo", "Aquí"], answer: "Lejos" },
+            { word: "Veloz", type: "sinonimo", options: ["Rápido", "Lento", "Pausado"], answer: "Rápido" },
+            { word: "Joven", type: "antónimo", options: ["Viejo", "Niño", "Pequeño"], answer: "Viejo" },
+            { word: "Helado", type: "sinonimo", options: ["Congelado", "Caliente", "Tibio"], answer: "Congelado" },
+            { word: "Valiente", type: "antónimo", options: ["Cobarde", "Atrevido", "Fuerte"], answer: "Cobarde" },
+            { word: "Alfombra", type: "sinonimo", options: ["Tapete", "Suelo", "Pared"], answer: "Tapete" },
+            { word: "Largo", type: "antónimo", options: ["Corto", "Ancho", "Extenso"], answer: "Corto" },
+            { word: "Pupitre", type: "sinonimo", options: ["Escritorio", "Silla", "Libro"], answer: "Escritorio" },
+            { word: "Divertido", type: "antónimo", options: ["Aburrido", "Alegre", "Rápido"], answer: "Aburrido" },
+            { word: "Clase", type: "sinonimo", options: ["Aula", "Patio", "Casa"], answer: "Aula" },
+            { word: "Sumar", type: "antónimo", options: ["Restar", "Añadir", "Contar"], answer: "Restar" },
+            { word: "Ver", type: "sinonimo", options: ["Mirar", "Oír", "Sentir"], answer: "Mirar" }
         ];
 
         let gameState = {
@@ -174,6 +225,7 @@
 
         // --- Initialization ---
         window.onload = () => {
+            document.getElementById('total-levels-display').innerText = wordBank.length;
             updateStatsUI();
         };
 
@@ -199,6 +251,9 @@
             if (gameState.currentLevel >= wordBank.length) {
                 showFeedback("¡Felicidades! Completaste todos los niveles.", "bg-purple-600");
                 gameState.currentLevel = 0; // Reiniciar o mostrar pantalla final
+                document.getElementById('play-screen').classList.add('hidden');
+                document.getElementById('setup-screen').classList.remove('hidden');
+                return;
             }
 
             const levelData = wordBank[gameState.currentLevel];
@@ -347,10 +402,10 @@
                 return;
             }
 
-            const headers = ["Usuario", "Fecha", "Palabra Base", "Relación", "Respuesta Alumno", "Resultado"];
+            const headers = ["Usuario", "Fecha", "Palabra Base", "Relacion", "Respuesta Alumno", "Resultado"];
             const rows = gameState.history.map(h => [
                 h.user,
-                h.date,
+                h.date.replace(/,/g, ""),
                 h.word,
                 h.type,
                 h.response,
